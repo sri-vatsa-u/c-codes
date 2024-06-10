@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+
+    int n;
+    //printf("Enter the size of the array: ");
+    scanf("%d", &n);
+    
+    int arr[n];
+    int distinct_count = 0;
+    
+    //printf("Enter the elements of the array: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    for (int i = 0; i < n; i++) {
+        int is_distinct = 1;
+        for (int j = 0; j < i; j++) {
+            if (arr[i] == arr[j]) {
+                is_distinct = 0;
+                break;
+            }
+        }
+        if (is_distinct) {
+            distinct_count++;
+        }
+    }
+    
+    printf("There are %d distinct element in the array.", distinct_count);  
+    return 0;
+}
