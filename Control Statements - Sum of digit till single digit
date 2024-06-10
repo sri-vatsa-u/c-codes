@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+
+    int number, sum;
+    
+    //printf("Enter a number: ");
+    scanf("%d", &number);
+    
+    while (number >= 10) {
+        sum = 0;
+        while (number > 0) {
+            sum += number % 10;
+            number /= 10;
+        }
+        number = sum;
+    }
+    
+    printf("%d\n", number);    
+    return 0;
+}
