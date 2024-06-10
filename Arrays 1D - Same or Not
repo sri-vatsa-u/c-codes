@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+
+    int n1, n2;
+    //printf("Enter the size of the first array: ");
+    scanf("%d", &n1);
+    
+    //printf("Enter the size of the second array: ");
+    scanf("%d", &n2);
+    
+    if (n1 != n2) {
+        printf("Not Same\n");
+        return 0;
+    }
+    
+    int arr1[n1], arr2[n2];
+    int sum1 = 0, sum2 = 0;
+    
+    //printf("Enter elements of the first array: ");
+    for (int i = 0; i < n1; i++) {
+        scanf("%d", &arr1[i]);
+        sum1 += arr1[i];
+    }
+    
+    //printf("Enter elements of the second array: ");
+    for (int i = 0; i < n2; i++) {
+        scanf("%d", &arr2[i]);
+        sum2 += arr2[i];
+    }
+    
+    if (sum1 == sum2) {
+        printf("Same\n");
+    } else {
+        printf("Not Same\n");
+    }   
+    return 0;
+}
