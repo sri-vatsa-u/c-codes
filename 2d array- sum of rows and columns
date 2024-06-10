@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+int main() {
+    int m, n;
+    int matrix[MAX_SIZE][MAX_SIZE];
+
+    // Read the dimensions of the matrix
+    scanf("%d %d", &m, &n);
+
+    // Read the elements of the matrix
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    int rowSum[MAX_SIZE] = {0};
+    int colSum[MAX_SIZE] = {0};
+
+    // Calculate the sum of each row and each column
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            rowSum[i] += matrix[i][j];
+            colSum[j] += matrix[i][j];
+        }
+    }
+
+    // Print the sum of rows
+    printf("The Sum of rows is ");
+    for (int i = 0; i < m; i++) {
+        printf("%d ", rowSum[i]);
+    }
+    printf("\n");
+
+    // Find the row with the maximum sum
+    int maxRowSum = rowSum[0], maxRowIndex = 0;
+    for (int i = 1; i < m; i++) {
+        if (rowSum[i] > maxRowSum) {
+            maxRowSum = rowSum[i];
+            maxRowIndex = i;
+        }
+    }
+    printf("Row %d has a maximum sum\n", maxRowIndex + 1);
+
+    // Print the sum of columns
+    printf("The Sum of columns is ");
+    for (int j = 0; j < n; j++) {
+        printf("%d ", colSum[j]);
+    }
+    printf("\n");
+
+    // Find the column with the maximum sum
+    int maxColSum = colSum[0], maxColIndex = 0;
+    for (int j = 1; j < n; j++) {
+        if (colSum[j] > maxColSum) {
+            maxColSum = colSum[j];
+            maxColIndex = j;
+        }
+    }
+    printf("Column %d has the maximum sum\n", maxColIndex + 1);
+
+    return 0;
+}
