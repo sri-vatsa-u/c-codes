@@ -1,0 +1,38 @@
+Joey Tribbiani wanted to buy a meatball Sandwich and went to the nearby sandwich shop. There was a poster 
+that said if anyone comes up with a program for Trendy Number they can get free Sandwiches for a lifetime 
+as a gift. Can you help Joey to write a program to check whether the given number is a trendy number or not?
+
+A number is said to be a trendy number if it has 3 digits and the middle digit is divisible by 3.
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+
+    int n;
+    int digit1, digit2, digit3;
+
+    scanf("%d", &n);
+
+    if (n < 100 || n > 999) {
+        printf("Invalid Number\n");
+    } else {
+        
+        digit1 = n % 10;        
+        digit2 = (n / 10) % 10; 
+        digit3 = n / 100;       
+
+        
+        if (digit2 % 3 == 0) {
+            printf("Trendy Number\n");
+        } else {
+            printf("Not a Trendy Number\n");
+        }
+    }
+
+
+    
+    return 0;
+}
