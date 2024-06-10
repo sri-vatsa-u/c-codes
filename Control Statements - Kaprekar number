@@ -1,0 +1,47 @@
+(Consider an n-digit number k. Square it and add the right n digits to the left n or n-1 digits.
+If the resultant sum is k, then k is called a Kaprekar number. For example, 9 is a Kaprekar number
+since 9^2 = 81 & 8 + 1 = 9, similarly, 297 is a Kaprekar number as 297^2 = 88209 & 88 + 209 = 297 ).
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+
+    int num;
+    //printf("Enter a number: ");
+    scanf("%d", &num);
+
+    long long square = (long long)num * num;
+
+    char numStr[20], squareStr[40];
+    sprintf(numStr, "%d", num);
+    sprintf(squareStr, "%lld", square);
+
+    int numDigits = strlen(numStr);
+    int squareDigits = strlen(squareStr);
+
+    if (squareDigits > 1) {
+        char leftPart[40] = "";
+        char rightPart[40] = "";
+        
+        strncpy(leftPart, squareStr, squareDigits - numDigits);
+        leftPart[squareDigits - numDigits] = '\0';
+        
+        strcpy(rightPart, &squareStr[squareDigits - numDigits]);
+
+        int leftNum = leftPart[0] ? atoi(leftPart) : 0;
+        int rightNum = atoi(rightPart);
+
+        if (leftNum + rightNum == num) {
+            printf("Kaprekar Number\n");
+        } else {
+            printf("Not a Kaprekar Number\n");
+        }
+    } else {
+        
+        printf("Not a Kaprekar Number\n");
+    }   
+    return 0;
+}
