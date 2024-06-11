@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+typedef struct {
+    int items[MAX_SIZE];
+    int front;
+    int rear;
+    int size;
+} Queue;
+
+void queue_init(Queue *q) {
+    q->front = 0;
+    q->rear = -1;
+    q->size = 0;
+}
+
+bool queue_is_empty(Queue *q) {
+    return q->size == 0;
+}
+
+bool queue_is_full(Queue *q) {
+    return q->size == MAX_SIZE;
+}
+
+void queue_push(Queue *q, int value) {
+    if (queue_is_full(q)) {
+        return;
+    }
+    q->rear = (q->rear + 1) % MAX_SIZE;
+    q->items[q->rear] = value;
+    q->size++;
+}
+
+int queue_pop(Queue *q) {
+    if (queue_is_empty(q)) {
+        return -1; // or handle underflow
+    }
+    int value = q->items[q->front];
+    q->front = (q->front + 1) % MAX_SIZE;
+    q->size--;
+    return value;
+}
+
+int queue_peek(Queue *q) {
+    if (queue_is_empty(q)) {
+        return -1; // or handle underflow
+    }
+    return q->items[q->front];
+}
+
+typedef struct {
+    Queue queue1;
+    Queue queue2;
+} MyStack;
+
+MyStack* myStackCreate() {
+    MyStack *stack = (MyStack*) malloc(sizeof(MyStack));
+    queue_init(&stack->queue1);
+    queue_init(&stack->queue2);
+    return stack;
+}
+
+void myStackPush(MyStack* obj, int x) {
+    queue_push(&obj->queue1, x);
+}
+
+int myStackPop(MyStack* obj) {
+    while (obj->queue1.size > 1) {
+        queue_push(&obj->queue2, queue_pop(&obj->queue1));
+    }
+    int top = queue_pop(&obj->queue1);
+    Queue temp = obj->queue1;
+    obj->queue1 = obj->queue2;
+    obj->queue2 = temp;
+    return top;
+}
+
+int myStackTop(MyStack* obj) {
+    while (obj->queue1.size > 1) {
+        queue_push(&obj->queue2, queue_pop(&obj->queue1));
+    }
+    int top = queue_pop(&obj->queue1);
+    queue_push(&obj->queue2, top);
+    Queue temp = obj->queue1;
+    obj->queue1 = obj->queue2;
+    obj->queue2 = temp;
+    return top;
+}
+
+bool myStackEmpty(MyStack* obj) {
+    return queue_is_empty(&obj->queue1);
+}
+
+void myStackFree(MyStack* obj) {
+    free(obj);
+}
