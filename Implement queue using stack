@@ -1,0 +1,110 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAX_SIZE 100
+
+typedef struct {
+    int items[MAX_SIZE];
+    int top;
+} Stack;
+
+void stack_init(Stack *stack) {
+    stack->top = -1;
+}
+
+bool stack_is_empty(Stack *stack) {
+    return stack->top == -1;
+}
+
+bool stack_is_full(Stack *stack) {
+    return stack->top == MAX_SIZE - 1;
+}
+
+void stack_push(Stack *stack, int value) {
+    if (!stack_is_full(stack)) {
+        stack->items[++stack->top] = value;
+    }
+}
+
+int stack_pop(Stack *stack) {
+    if (!stack_is_empty(stack)) {
+        return stack->items[stack->top--];
+    }
+    return -1; // Or handle underflow
+}
+
+int stack_peek(Stack *stack) {
+    if (!stack_is_empty(stack)) {
+        return stack->items[stack->top];
+    }
+    return -1; // Or handle underflow
+}
+
+typedef struct {
+    Stack stack1;
+    Stack stack2;
+} MyQueue;
+
+MyQueue* myQueueCreate() {
+    MyQueue* queue = (MyQueue*)malloc(sizeof(MyQueue));
+    stack_init(&queue->stack1);
+    stack_init(&queue->stack2);
+    return queue;
+}
+
+void myQueuePush(MyQueue* obj, int x) {
+    stack_push(&obj->stack1, x);
+}
+
+int myQueuePop(MyQueue* obj) {
+    if (stack_is_empty(&obj->stack2)) {
+        while (!stack_is_empty(&obj->stack1)) {
+            stack_push(&obj->stack2, stack_pop(&obj->stack1));
+        }
+    }
+    return stack_pop(&obj->stack2);
+}
+
+int myQueuePeek(MyQueue* obj) {
+    if (stack_is_empty(&obj->stack2)) {
+        while (!stack_is_empty(&obj->stack1)) {
+            stack_push(&obj->stack2, stack_pop(&obj->stack1));
+        }
+    }
+    return stack_peek(&obj->stack2);
+}
+
+bool myQueueEmpty(MyQueue* obj) {
+    return stack_is_empty(&obj->stack1) && stack_is_empty(&obj->stack2);
+}
+
+void myQueueFree(MyQueue* obj) {
+    free(obj);
+}
+
+/**
+ * Your MyQueue struct will be instantiated and called as such:
+ * MyQueue* obj = myQueueCreate();
+ * myQueuePush(obj, x);
+ * int param_2 = myQueuePop(obj);
+ * int param_3 = myQueuePeek(obj);
+ * bool param_4 = myQueueEmpty(obj);
+ * myQueueFree(obj);
+ */
+
+/*int main() {
+    MyQueue* myQueue = myQueueCreate();
+
+    myQueuePush(myQueue, 1); // queue is: [1]
+    myQueuePush(myQueue, 2); // queue is: [1, 2]
+    printf("Peek element: %d\n", myQueuePeek(myQueue)); // return 1
+    printf("Pop element: %d\n", myQueuePop(myQueue)); // return 1, queue is [2]
+    printf("Is queue empty? %d\n", myQueueEmpty(myQueue)); // return false
+
+    myQueuePush(myQueue, 3); // queue is: [2, 3]
+    printf("Peek element: %d\n", myQueuePeek(myQueue)); // return 2
+
+    myQueueFree(myQueue);
+    return 0;
+}*/
