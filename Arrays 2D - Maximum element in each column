@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#define MAX_SIZE 100
+
+void findMaxInColumns(int matrix[MAX_SIZE][MAX_SIZE], int m, int n) {
+    for (int j = 0; j < n; j++) {
+        int max = matrix[0][j];
+        for (int i = 1; i < m; i++) {
+            if (matrix[i][j] > max) {
+                max = matrix[i][j];
+            }
+        }
+        printf("%d\n", max);
+    }
+}
+
+int main() {
+    int m, n;
+    int matrix[MAX_SIZE][MAX_SIZE];
+
+    scanf("%d", &m);
+    scanf("%d", &n);
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    findMaxInColumns(matrix, m, n);
+
+    return 0;
+
+}
