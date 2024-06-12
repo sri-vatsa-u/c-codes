@@ -1,0 +1,116 @@
+Ram has a fruit shop. He has arranged some set of fruits in the column and row-wise. Ram needs to find which row and column have a maximum number of fruits. Help him to find out.
+
+Input Format
+
+Input consists of 2 integers(size of rows and columns) and 1 2D array.
+
+Constraints
+
+NA
+
+Output Format
+
+The output prints the sum of all rows and columns as well as print the row and column which has the maximum sum. Refer to the sample output.
+
+Sample Input 0
+
+3
+3
+1 6 8
+2 5 1
+3 8 2
+Sample Output 0
+
+The Sum of rows is 15 8 13
+Row 1 has a maximum sum
+The Sum of columns is 6 19 11
+Column 2 has the maximum sum
+Explanation 0
+
+Here the sum of rows and columns is 15,18,13 and 6,9,11 respectively. Then it will compare the values and print the greatest sum(row and column).
+
+Sample Input 1
+
+2
+2
+5 7
+9 7
+Sample Output 1
+
+The Sum of rows is 12 16
+Row 2 has a maximum sum
+The Sum of columns is 14 14
+Column 1 has the maximum sum
+Explanation 1
+
+Here the sum of rows and columns is 12,16 and 14,14 respectively. Then it will compare the values and print the greatest sum(row and column).
+
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+int main() {
+    int m, n;
+    int matrix[MAX_SIZE][MAX_SIZE];
+
+    // Read the dimensions of the matrix
+    scanf("%d %d", &m, &n);
+
+    // Read the elements of the matrix
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    int rowSum[MAX_SIZE] = {0};
+    int colSum[MAX_SIZE] = {0};
+
+    // Calculate the sum of each row and each column
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            rowSum[i] += matrix[i][j];
+            colSum[j] += matrix[i][j];
+        }
+    }
+
+    // Print the sum of rows
+    printf("The Sum of rows is ");
+    for (int i = 0; i < m; i++) {
+        printf("%d ", rowSum[i]);
+    }
+    printf("\n");
+
+    // Find the row with the maximum sum
+    int maxRowSum = rowSum[0], maxRowIndex = 0;
+    for (int i = 1; i < m; i++) {
+        if (rowSum[i] > maxRowSum) {
+            maxRowSum = rowSum[i];
+            maxRowIndex = i;
+        }
+    }
+    printf("Row %d has a maximum sum\n", maxRowIndex + 1);
+
+    // Print the sum of columns
+    printf("The Sum of columns is ");
+    for (int j = 0; j < n; j++) {
+        printf("%d ", colSum[j]);
+    }
+    printf("\n");
+
+    // Find the column with the maximum sum
+    int maxColSum = colSum[0], maxColIndex = 0;
+    for (int j = 1; j < n; j++) {
+        if (colSum[j] > maxColSum) {
+            maxColSum = colSum[j];
+            maxColIndex = j;
+        }
+    }
+    printf("Column %d has the maximum sum\n", maxColIndex + 1);
+
+    return 0;
+}
