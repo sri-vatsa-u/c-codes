@@ -1,0 +1,108 @@
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+Example 2:
+
+Input: head = [1], n = 1
+Output: []
+Example 3:
+
+Input: head = [1,2], n = 1
+Output: [1]
+ 
+
+Constraints:
+
+The number of nodes in the list is sz.
+1 <= sz <= 30
+0 <= Node.val <= 100
+1 <= n <= sz
+ 
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition for singly-linked list.
+struct ListNode {
+    int val;
+    struct ListNode *next;
+};
+
+// Helper function to create a new node
+struct ListNode* createNode(int val) {
+    struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
+    newNode->val = val;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to remove the nth node from the end of the list
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
+    struct ListNode dummy;
+    dummy.next = head;
+    struct ListNode* first = &dummy;
+    struct ListNode* second = &dummy;
+
+    // Move first n+1 steps ahead
+    for (int i = 0; i <= n; i++) {
+        first = first->next;
+    }
+
+    // Move both first and second until first reaches the end
+    while (first != NULL) {
+        first = first->next;
+        second = second->next;
+    }
+
+    // Remove the nth node
+    struct ListNode* toDelete = second->next;
+    second->next = second->next->next;
+    free(toDelete);
+
+    return dummy.next;
+}
+
+// Helper function to print the linked list
+void printList(struct ListNode* head) {
+    while (head != NULL) {
+        printf("%d ", head->val);
+        head = head->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    // Example 1
+    struct ListNode* head = createNode(1);
+    head->next = createNode(2);
+    head->next->next = createNode(3);
+    head->next->next->next = createNode(4);
+    head->next->next->next->next = createNode(5);
+
+    printf("Original list: ");
+    printList(head);
+
+    int n = 2;
+    head = removeNthFromEnd(head, n);
+
+    printf("Modified list: ");
+    printList(head);
+
+    // Free the allocated memory
+    struct ListNode* temp;
+    while (head != NULL) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+
+    return 0;
+}
