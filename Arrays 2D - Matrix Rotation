@@ -1,0 +1,101 @@
+Mr. Bean has saved an image in a 2D array and he wants to rotate the image by 90 degrees in clockwise direction. Please help him code for array rotation by 90 degrees in clockwise direction.
+
+Input Format
+
+The first line contains the size of the matrix N. The next N lines contain the elements of the matrix
+
+Constraints
+
+NA
+
+Output Format
+
+The output prints the rotated matrix
+
+Sample Input 0
+
+3
+1 2 3
+4 5 6
+7 8 9
+Sample Output 0
+
+7 4 1
+8 5 2
+9 6 3
+Explanation 0
+
+The output is the 90-degree clockwise rotated matrix. Try to visualize.
+
+Sample Input 1
+
+3
+-5 -10 -4 
+3 -6 3 
+-1 0 -6 
+Sample Output 1
+
+-1 3 -5
+0 -6 -10
+-6 3 -4
+Explanation 1
+
+The output is the 90-degree clockwise rotated matrix. Try to visualize.
+
+
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+void transposeMatrix(int matrix[MAX_SIZE][MAX_SIZE], int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = i; j < n; j++) {
+            int temp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = temp;
+        }
+    }
+}
+
+void reverseRows(int matrix[MAX_SIZE][MAX_SIZE], int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n / 2; j++) {
+            int temp = matrix[i][j];
+            matrix[i][j] = matrix[i][n - 1 - j];
+            matrix[i][n - 1 - j] = temp;
+        }
+    }
+}
+
+void rotate90Clockwise(int matrix[MAX_SIZE][MAX_SIZE], int n) {
+    transposeMatrix(matrix, n);
+    reverseRows(matrix, n);
+}
+
+int main() {
+    int n;
+    int matrix[MAX_SIZE][MAX_SIZE];
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    rotate90Clockwise(matrix, n);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
