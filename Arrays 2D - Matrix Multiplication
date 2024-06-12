@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#define MAX_SIZE 100
+
+void multiplyMatrices(int firstMatrix[MAX_SIZE][MAX_SIZE], int secondMatrix[MAX_SIZE][MAX_SIZE], int resultMatrix[MAX_SIZE][MAX_SIZE], int m, int n) {
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            resultMatrix[i][j] = 0;
+            for (int k = 0; k < n; k++) {
+                resultMatrix[i][j] += firstMatrix[i][k] * secondMatrix[k][j];
+            }
+        }
+    }
+}
+
+int main() {
+    int m, n;
+    int firstMatrix[MAX_SIZE][MAX_SIZE], secondMatrix[MAX_SIZE][MAX_SIZE], resultMatrix[MAX_SIZE][MAX_SIZE];
+
+    scanf("%d %d", &m, &n);
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &firstMatrix[i][j]);
+        }
+    }
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &secondMatrix[i][j]);
+        }
+    }
+
+    multiplyMatrices(firstMatrix, secondMatrix, resultMatrix, m, n);
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", resultMatrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
