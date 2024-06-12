@@ -1,0 +1,108 @@
+Given the head of a linked list, rotate the list to the right by k places.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], k = 2
+Output: [4,5,1,2,3]
+Example 2:
+
+
+Input: head = [0,1,2], k = 4
+Output: [2,0,1]
+ 
+
+Constraints:
+
+The number of nodes in the list is in the range [0, 500].
+-100 <= Node.val <= 100
+0 <= k <= 2 * 109
+
+#include <stdio.h>
+#include <stdlib.h>
+/*
+// Definition for singly-linked list.
+struct ListNode {
+    int val;
+    struct ListNode *next;
+};
+*/
+// Helper function to create a new node
+struct ListNode* createNode(int val) {
+    struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
+    newNode->val = val;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to rotate the list to the right by k places
+struct ListNode* rotateRight(struct ListNode* head, int k) {
+    if (!head || k == 0) return head;
+
+    // Calculate the length of the linked list
+    struct ListNode* curr = head;
+    int length = 1;
+    while (curr->next) {
+        curr = curr->next;
+        length++;
+    }
+
+    // Adjust k to be within the bounds of the list length
+    k = k % length;
+    if (k == 0) return head;
+
+    // Connect the end of the list to the head to form a circle
+    curr->next = head;
+
+    // Find the new tail (the node before the new head)
+    int stepsToNewHead = length - k;
+    struct ListNode* newTail = head;
+    for (int i = 1; i < stepsToNewHead; i++) {
+        newTail = newTail->next;
+    }
+
+    // Break the circle and set the new head
+    struct ListNode* newHead = newTail->next;
+    newTail->next = NULL;
+
+    return newHead;
+}
+
+// Helper function to print the linked list
+void printList(struct ListNode* head) {
+    while (head != NULL) {
+        printf("%d ", head->val);
+        head = head->next;
+    }
+    printf("\n");
+}
+/*
+int main() {
+    // Example 1
+    struct ListNode* head = createNode(1);
+    head->next = createNode(2);
+    head->next->next = createNode(3);
+    head->next->next->next = createNode(4);
+    head->next->next->next->next = createNode(5);
+
+    int k = 2;
+    printf("Original List: ");
+    printList(head);
+
+    struct ListNode* rotatedHead = rotateRight(head, k);
+    printf("Rotated List: ");
+    printList(rotatedHead);
+
+    // Free the allocated memory (optional in this example, but good practice)
+    struct ListNode* temp;
+    while (rotatedHead != NULL) {
+        temp = rotatedHead;
+        rotatedHead = rotatedHead->next;
+        free(temp);
+    }
+
+    return 0;
+}
+*/
