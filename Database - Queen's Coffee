@@ -1,0 +1,34 @@
+
+create table users(
+id int primary key auto_increment,
+username varchar(255) not null,
+password varchar(50) not null
+);
+insert into users (username,password)
+            values('udbav','5642');
+insert into users (username,password)
+            values('shetty','5641');
+insert into users (username,password)
+            values('arsikere','5640');
+          
+select * from items; select * from users;
+           desc items;
+create table items (
+id integer primary key auto_increment,
+name varchar (512) not null,
+price float not null default(0.0),
+item_size varchar(50) not null,
+description varchar(1024) not null
+);
+INSERT INTO items (name,price,item_size,description)
+            values ('coffee',20.0,'small','small coffee'),
+				     ('tea',15.0,'small','small tea'),
+                     ('coffee',40.0,'large','large coffee'),
+                     ('snacks',40.0,'small','small snacks');
+                     
+                     update items
+                  set   price = 25.0
+                     WHERE name ='tea' and item_size= 'small';
+                     
+                    
+            select * from items where price IN (18,40);
